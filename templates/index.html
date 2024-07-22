@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Interaction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Voice Interaction</h1>
+    <form action="/start" method="post">
+        <button type="submit">Start Listening</button>
+    </form>
+    <form action="/submit-text" method="post">
+        <input type="text" name="text" placeholder="Type something...">
+        <button type="submit">Submit Text</button>
+    </form>
+    <div id="output"></div>
+    <script>
+        document.querySelector('form[action="/start"]').addEventListener('submit', function(event) {
+            event.preventDefault();
+            fetch('/start', { method: 'POST' })
+                .then(response => response.text())
+                .then(text => document.getElementById('output').innerText = text);
+        });
+
+        document.querySelector('form[action="/submit-text"]').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            fetch('/submit-text', { 
+                method: 'POST', 
+                body: formData 
+            })
+            .then(response => response.text())
+            .then(text => document.getElementById('output').innerText = text);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Flask
+speechrecognition
+pyaudio
+gtts
+simpleaudio
+pydub
